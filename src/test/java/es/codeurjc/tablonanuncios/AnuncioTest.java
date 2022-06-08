@@ -19,45 +19,45 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AnuncioTest {
 
-	@LocalServerPort
-	int port;
+    @LocalServerPort
+    int port;
 
-	WebDriver driver;
-	
-	@BeforeAll
-	public static void setupClass() {
-		WebDriverManager.chromedriver().setup();
-	}
-	
-	@BeforeEach
-	public void setup() {
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless");
-		driver = new ChromeDriver(options);
-	}
-	
-	@AfterEach
-	public void teardown() {
-		if(driver != null) {
-			driver.quit();
-		}
-	}
-	
-	@Test
-	public void createAnuncio() throws InterruptedException {
-		driver.get("http://localhost:"+this.port+"/");
-		
-		driver.findElement(By.linkText("Nuevo anuncio")).click();
-		
-		driver.findElement(By.name("nombre")).sendKeys("Michel");
-		driver.findElement(By.name("asunto")).sendKeys("Vendo moto roja");
-		driver.findElement(By.name("comentario")).sendKeys("Un comentario muy largo...");
-		
-		driver.findElement(By.id("enviar")).click();
-		
-		driver.findElement(By.linkText("Volver al tablón")).click();
-		
-		assertNotNull(driver.findElement(By.partialLinkText("Vendo moto roja")));
-	}
+    WebDriver driver;
+
+    @BeforeAll
+    public static void setupClass() {
+        WebDriverManager.chromedriver().setup();
+    }
+
+    @BeforeEach
+    public void setup() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+    }
+
+    @AfterEach
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @Test
+    public void createAnuncio() throws InterruptedException {
+        driver.get("http://localhost:" + this.port + "/");
+
+        driver.findElement(By.linkText("Nuevo anuncio")).click();
+
+        driver.findElement(By.name("nombre")).sendKeys("Michel");
+        driver.findElement(By.name("asunto")).sendKeys("Vendo moto roja");
+        driver.findElement(By.name("comentario")).sendKeys("Un comentario muy largo...");
+
+        driver.findElement(By.id("enviar")).click();
+
+        driver.findElement(By.linkText("Volver al tablón")).click();
+
+        assertNotNull(driver.findElement(By.partialLinkText("Vendo moto roja")));
+    }
 
 }
